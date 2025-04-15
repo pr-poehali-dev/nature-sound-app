@@ -32,7 +32,7 @@ const audioFiles = [
   {
     name: 'Огонь',
     icon: <Flame />,
-    src: 'https://soundbible.com/mp3/fire_burning-Simon_Craggs-34144858.mp3'
+    src: 'https://storage.yandexcloud.net/poehali-cdn/fire.mp3'
   },
   {
     name: 'Птицы',
