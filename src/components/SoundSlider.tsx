@@ -13,6 +13,7 @@ const SoundSlider: React.FC<SoundSliderProps> = ({ icon, name, audioSrc, onChang
   const [volume, setVolume] = useState(0);
   const [audio] = useState(new Audio(audioSrc));
 
+  // Инициализация аудио при монтировании
   useEffect(() => {
     audio.loop = true;
     
@@ -22,6 +23,7 @@ const SoundSlider: React.FC<SoundSliderProps> = ({ icon, name, audioSrc, onChang
     };
   }, [audio]);
 
+  // Управление состоянием аудио при изменении громкости
   useEffect(() => {
     audio.volume = volume / 100;
     
@@ -30,9 +32,13 @@ const SoundSlider: React.FC<SoundSliderProps> = ({ icon, name, audioSrc, onChang
     } else if (volume === 0 && !audio.paused) {
       audio.pause();
     }
-    
-    onChange(volume);
-  }, [volume, audio, onChange]);
+  }, [volume, audio]);
+
+  // Отдельный обработчик для изменения слайдера
+  const handleSliderChange = (value: number[]) => {
+    setVolume(value[0]);
+    onChange(value[0]); // Вызываем только здесь, а не в эффекте
+  };
 
   return (
     <div className="flex flex-col items-center gap-2 w-full">
@@ -46,7 +52,7 @@ const SoundSlider: React.FC<SoundSliderProps> = ({ icon, name, audioSrc, onChang
         step={1}
         orientation="vertical"
         className="h-32"
-        onValueChange={(value) => setVolume(value[0])}
+        onValueChange={handleSliderChange}
       />
     </div>
   );
